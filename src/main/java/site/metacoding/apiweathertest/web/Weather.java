@@ -42,8 +42,10 @@ public class Weather {
    
            @Column(length = 300, nullable = false)
            private String spotAreaName; //관광지_지역이름
+           
         @Column(length = 300, nullable = false)
-            private String spotName;  //관광지명
+        private String spotName; //관광지명
+            
     private int th3; //일 3시간 기온
     private int wd; //풍향
     private int ws;  //풍속

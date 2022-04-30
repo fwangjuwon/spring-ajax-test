@@ -12,7 +12,6 @@
 
 <body>
     <h1>관광지 날씨조회</h1>
-    <input type="text" id="courseId">
     <button id="btn-weather">클릭</button>
     <div id="box-weather"></div>
 </body>
@@ -23,55 +22,33 @@
     });
 
     async function showWeather() {
-        let courseId = $("#courseId").val();
         let response = await fetch(`/apitest`);
         let responseParse = await response.json();
 
-        if (response.status == 200) {
-            let data = responseParse.response.body.items.item;
-            console.log(data);
 
-            data.forEach((item) => {
-                $("#box-weather").append(weatherRender(item));
-            });
+        for (renderingItem of responseParse.response.body.items.item) {
+            $("#box-weather").append(weatherRender());
         }
     }
 
     function weatherRender() {
-        let courseName = item.courseName
-        let courseAreaName = item.courseAreaName
-        let spotAreaName = item.spotAreaName
-        let spotName = item.spotName
-        let tm = item.tm
-        let sky = item.sky
-        let pop = item.pop
+        let courseName = renderingItem.courseName
+        let courseAreaName = renderingItem.courseAreaName
+        let spotAreaName = renderingItem.spotAreaName
+        let spotName = renderingItem.spotName
+        let tm = renderingItem.tm
+        let sky = renderingItem.sky
+        let pop = renderingItem.pop
 
 
-        if (sky == 1) {
-            sky = "맑음";
-        } else if (sky == 2) {
-            sky = "구름";
-        } else if (sky == 3) {
-            sky = "흐림";
-        } else if (sky == 4) {
-            sky = "비";
-        } else if (sky == 5) {
-            sky = "소나기";
-        } else if (sky == 6) {
-            sky = "비눈";
-        } else if (sky == 7) {
-            sky = "눈비";
-        } else {
-            sky = "눈";
-        }
 
         return `<ul>
-            코스명 : ${courseName}
-            <li>지역 : ${item.courseAreaName}${item.spotAreaName}</li>
-            <li>관광지명 : ${item.spotName}</li>
-            <li>예보시간 : ${item.tm}</li>
-            <li>하늘상태 : ${item.sky}</li>
-            <li>강수량 : ${pop}</li>
+            코스명 : ${renderingItem.courseName}
+            <li>지역 : ${renderingItem.courseAreaName}${renderingItem.spotAreaName}</li>
+            <li>관광지명 : ${renderingItem.spotName}</li>
+            <li>예보시간 : ${renderingItem.tm}</li>
+            <li>하늘상태 : ${renderingItem.sky}</li>
+            <li>강수량 : ${renderingItem.pop}</li>
         </ul>
                 `;
     }
